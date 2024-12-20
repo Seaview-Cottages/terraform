@@ -8,6 +8,8 @@ module "seaviewcottages_org_email" {
 
   zone_id = cloudflare_zone.seaviewcottages_org.id
   fqdn    = cloudflare_zone.seaviewcottages_org.zone
+
+  dmarc_report_address = "mailto:c1c91df0f9af4bf8a626bd6a95e17ec5@dmarc-reports.cloudflare.net"
 }
 
 resource "cloudflare_record" "github_verification" {
