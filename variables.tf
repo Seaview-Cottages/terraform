@@ -6,5 +6,5 @@ variable "cloudflare_api_token" {
 
 variable "cloudflare_account_id" {
   description = "Cloudflare Account ID"
-  type = string
+  type        = string
 }
