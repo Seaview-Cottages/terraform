@@ -18,3 +18,36 @@ resource "cloudflare_record" "github_verification" {
   name    = "_github-pages-challenge-Seaview-Cottages"
   content = "ee4c340666bfa62bea190b41d9db32"
 }
+
+locals {
+  ses_verification_records = {
+    "n4xtwin3tfhenbiggqobv2jizmbodcrz._domainkey.seaviewcottages.org" : "n4xtwin3tfhenbiggqobv2jizmbodcrz.dkim.amazonses.com",
+    "cx4blsipd5ul3fh3mryhzr75zn2rfya2._domainkey.seaviewcottages.org" : "cx4blsipd5ul3fh3mryhzr75zn2rfya2.dkim.amazonses.com",
+    "dffmkhmxpyhvt4rbxg5asylfgzdgcvxv._domainkey.seaviewcottages.org" : "dffmkhmxpyhvt4rbxg5asylfgzdgcvxv.dkim.amazonses.com"
+  }
+}
+
+resource "cloudflare_record" "ses_dkim" {
+  for_each = tomap(local.ses_verification_records)
+
+  zone_id = cloudflare_zone.seaviewcottages_org.id
+  type    = "CNAME"
+  name    = each.key
+  content = each.value
+  proxied = false
+}
+
+resource "cloudflare_record" "ses_mail_from_mx" {
+  zone_id  = cloudflare_zone.seaviewcottages_org.id
+  type     = "MX"
+  name     = "bounces.seaviewcottages.org"
+  priority = 10
+  content  = "feedback-smtp.us-west-2.amazonses.com"
+}
+
+resource "cloudflare_record" "ses_mail_from_txt" {
+  zone_id = cloudflare_zone.seaviewcottages_org.id
+  type    = "TXT"
+  name    = "bounces.seaviewcottages.org"
+  content = "v=spf1 include:amazonses.com ~all"
+}
