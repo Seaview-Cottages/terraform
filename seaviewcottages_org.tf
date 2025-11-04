@@ -66,7 +66,7 @@ resource "cloudflare_record" "payhoa_web_root" {
   content = "seaview-cottages-coa.site.payhoa.com"
 }
 
-resource "cloudflare_record" "payhoa_web_root" {
+resource "cloudflare_record" "payhoa_web_ssl" {
   zone_id = cloudflare_zone.seaviewcottages_org.id
   type    = "CNAME"
   name    = "_c2476283602c38f0ad4d6105bcb4e9de.seaviewcottages.org"
