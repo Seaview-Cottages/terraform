@@ -51,3 +51,24 @@ resource "cloudflare_record" "ses_mail_from_txt" {
   name    = "bounces.seaviewcottages.org"
   content = "v=spf1 include:amazonses.com ~all"
 }
+
+resource "cloudflare_record" "payhoa_web_www" {
+  zone_id = cloudflare_zone.seaviewcottages_org.id
+  type    = "CNAME"
+  name    = "www.seaviewcottages.org"
+  content = "seaview-cottages-coa.site.payhoa.com"
+}
+
+resource "cloudflare_record" "payhoa_web_root" {
+  zone_id = cloudflare_zone.seaviewcottages_org.id
+  type    = "CNAME"
+  name    = "seaviewcottages.org"
+  content = "seaview-cottages-coa.site.payhoa.com"
+}
+
+resource "cloudflare_record" "payhoa_web_root" {
+  zone_id = cloudflare_zone.seaviewcottages_org.id
+  type    = "CNAME"
+  name    = "_c2476283602c38f0ad4d6105bcb4e9de.seaviewcottages.org"
+  content = "_93962a83ee790fa40991ba2f6596657e.jkddzztszm.acm-validations.aws."
+}
